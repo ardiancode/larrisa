@@ -1,4 +1,4 @@
-name: WordPress PHPCS Check
+name: Code Standards
 
 on:
   push:
@@ -7,35 +7,36 @@ on:
     branches: [ main ]
 
 jobs:
-  phpcs:
+  lint:
     runs-on: ubuntu-latest
-    name: Run WordPress Coding Standards
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
 
-      - name: Create composer.json if not exists
+      - name: Install Composer dependencies
         run: |
-          if [ ! -f composer.json ]; then
-            echo '{}' > composer.json
-          fi
-
-      - name: Allow required Composer plugin
-        run: composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-
-      - name: Install PHPCS and WordPress standards
-        run: |
-          composer require --dev squizlabs/php_codesniffer:^3.7 \
-                                wp-coding-standards/wpcs:^3.0 \
-                                phpcsstandards/phpcsextra:^1.4 \
-                                phpcsstandards/phpcsutils:^1.0 \
-                                dealerdirect/phpcodesniffer-composer-installer:^1.1
+          composer init --no-interaction --name="ardian/larrisa"
+          composer require --dev squizlabs/php_codesniffer wp-coding-standards/wpcs
+          vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
 
       - name: Run PHPCS
         run: vendor/bin/phpcs --standard=WordPress --ignore=vendor,node_modules,build .
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install ESLint
+        run: |
+          npm init -y
+          npm install --save-dev eslint @wordpress/eslint-plugin
+
+      - name: Run ESLint
+        run: npx eslint src --ext .js,.jsx
