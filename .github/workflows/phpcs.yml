@@ -1,0 +1,30 @@
+name: WordPress PHPCS Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+    name: Run WordPress Coding Standards
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Install PHPCS and WPCS
+        run: |
+          composer global require "squizlabs/php_codesniffer=*"
+          composer global require "wp-coding-standards/wpcs"
+          ~/.composer/vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/wp-coding-standards/wpcs
+
+      - name: Run PHPCS
+        run: ~/.composer/vendor/bin/phpcs --standard=phpcs.xml .

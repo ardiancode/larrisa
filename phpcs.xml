@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Theme">
+    <description>PHPCS rules for WordPress coding standards.</description>
+    <rule ref="WordPress" />
+
+    <!-- Ignore build folder -->
+    <exclude-pattern>build/*</exclude-pattern>
+</ruleset>
