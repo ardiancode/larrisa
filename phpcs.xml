@@ -2,9 +2,24 @@
 <ruleset name="WordPress Theme Standards">
     <description>PHPCS configuration for WordPress Theme</description>
 
+    <!-- Use WordPress coding standards -->
     <rule ref="WordPress"/>
+
+    <!-- Scan everything in the project -->
     <file>.</file>
+
+    <!-- Ignore common folders -->
     <exclude-pattern>vendor/*</exclude-pattern>
     <exclude-pattern>node_modules/*</exclude-pattern>
     <exclude-pattern>build/*</exclude-pattern>
+
+    <!-- 🧹 Ignore JavaScript/JSX files to prevent false JSX errors -->
+    <exclude-pattern>*.js</exclude-pattern>
+    <exclude-pattern>*.jsx</exclude-pattern>
+
+    <!-- (Optional) Ignore other front-end assets -->
+    <exclude-pattern>*.json</exclude-pattern>
+    <exclude-pattern>*.map</exclude-pattern>
+
+    <exclude-pattern>src/*</exclude-pattern>
 </ruleset>
