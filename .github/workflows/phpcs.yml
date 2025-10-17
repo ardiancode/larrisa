@@ -26,6 +26,9 @@ jobs:
             echo '{}' > composer.json
           fi
 
+      - name: Allow required Composer plugin
+        run: composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+
       - name: Install PHPCS and WPCS
         run: |
           composer require --dev squizlabs/php_codesniffer:^3.7 wp-coding-standards/wpcs:^3.0
