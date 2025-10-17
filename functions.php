@@ -1,28 +1,44 @@
 <?php
-// functions.php
+/**
+ * Theme functions and definitions.
+ *
+ * @package Larrisa
+ */
 
+/**
+ * Enqueue the main theme stylesheet.
+ *
+ * @return void
+ */
 function yourtheme_enqueue_styles() {
-    // Enqueue the main style.css from the theme root
-    wp_enqueue_style(
-        'yourtheme-style',                  // handle
-        get_stylesheet_uri(),               // points to style.css in theme root
-        array(),                            // dependencies
-        filemtime( get_template_directory() . '/style.css' ) // version = file modification time for cache-busting
-    );
+	// Enqueue the main style.css from the theme root.
+	wp_enqueue_style(
+		'yourtheme-style', // Handle.
+		get_stylesheet_uri(), // Points to style.css in theme root.
+		array(), // Dependencies.
+		filemtime( get_template_directory() . '/style.css' ) // Version: file modification time for cache-busting.
+	);
 }
 add_action( 'wp_enqueue_scripts', 'yourtheme_enqueue_styles' );
 
-
+/**
+ * Register block types from build directory.
+ *
+ * @return void
+ */
 function create_block_dark_light_mode_block_init() {
 	/**
-	 * Registers the block(s) metadata from the `blocks-manifest.php` and registers the block type(s)
-	 * based on the registered block metadata.
+	 * Registers the block(s) metadata from the `blocks-manifest.php` and registers
+	 * the block type(s) based on the registered block metadata.
 	 * Added in WordPress 6.8 to simplify the block metadata registration process added in WordPress 6.7.
 	 *
 	 * @see https://make.wordpress.org/core/2025/03/13/more-efficient-block-type-registration-in-6-8/
 	 */
 	if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
-		wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
+		wp_register_block_types_from_metadata_collection(
+			__DIR__ . '/build',
+			__DIR__ . '/build/blocks-manifest.php'
+		);
 		return;
 	}
 
@@ -33,8 +49,12 @@ function create_block_dark_light_mode_block_init() {
 	 * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
 	 */
 	if ( function_exists( 'wp_register_block_metadata_collection' ) ) {
-		wp_register_block_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
+		wp_register_block_metadata_collection(
+			__DIR__ . '/build',
+			__DIR__ . '/build/blocks-manifest.php'
+		);
 	}
+
 	/**
 	 * Registers the block type(s) in the `blocks-manifest.php` file.
 	 *
@@ -46,3 +66,4 @@ function create_block_dark_light_mode_block_init() {
 	}
 }
 add_action( 'init', 'create_block_dark_light_mode_block_init' );
+
