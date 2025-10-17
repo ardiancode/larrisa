@@ -66,4 +66,3 @@ function create_block_dark_light_mode_block_init() {
 	}
 }
 add_action( 'init', 'create_block_dark_light_mode_block_init' );
-

@@ -17,26 +17,29 @@
  * JavaScript running in the front-end, then you should delete this file and remove
  * the `viewScript` property from `block.json`.
  *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
+ * @package Larrisa
  */
 
 /* eslint-disable no-console */
-const html = document.documentElement;
-const toggle = document.getElementById("theme-toggle");
+const html	= document.documentElement;
+const toggle	= document.getElementById( 'theme-toggle' );
 
-// Load saved preference
-if (localStorage.getItem("theme") === "dark") {
-  html.setAttribute("theme", "dark");
-  toggle.checked = true;
+// Load saved preference.
+if ( localStorage.getItem( 'theme' ) === 'dark' ) {
+	html.setAttribute( 'theme', 'dark' );
+	toggle.checked = true;
 }
 
-// Toggle theme
-toggle.addEventListener("change", () => {
-  if (toggle.checked) {
-    html.setAttribute("theme", "dark");
-    localStorage.setItem("theme", "dark");
-  } else {
-    html.setAttribute("theme", "light");
-    localStorage.setItem("theme", "light");
-  }
-});
+// Toggle theme.
+toggle.addEventListener(
+	'change',
+	() => {
+		if ( toggle.checked ) {
+			html.setAttribute( 'theme', 'dark' );
+			localStorage.setItem( 'theme', 'dark' );
+		} else {
+			html.setAttribute( 'theme', 'light' );
+			localStorage.setItem( 'theme', 'light' );
+		}
+	}
+);
