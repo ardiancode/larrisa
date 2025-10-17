@@ -20,16 +20,16 @@ jobs:
         with:
           php-version: '8.1'
 
-      - name: Ensure composer.json exists
+      - name: Create composer.json if not exists
         run: |
           if [ ! -f composer.json ]; then
-            composer init --no-interaction
+            echo '{}' > composer.json
           fi
 
       - name: Install PHPCS and WPCS
         run: |
-          composer require --dev squizlabs/php_codesniffer:^3.7 wp-coding-standards/wpcs
+          composer require --dev squizlabs/php_codesniffer:^3.7 wp-coding-standards/wpcs:^3.0
           vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
 
       - name: Run PHPCS
-        run: vendor/bin/phpcs --standard=phpcs.xml .
+        run: vendor/bin/phpcs --standard=WordPress --ignore=vendor,node_modules,build .
